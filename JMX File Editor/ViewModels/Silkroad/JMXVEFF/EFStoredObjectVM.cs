@@ -44,7 +44,7 @@ namespace JMXFileEditor.ViewModels.Silkroad.JMXVEFF
             Childs.Add(new JMXAttribute("UnkInt02", data.Int1));
             Childs.Add(new JMXAttribute("UnkInt03", data.Int2));
             Childs.Add(new JMXAttribute("UnkByte03", data.Byte2));
-            Childs.Add(new JMXAttribute("UnkInt04", data.Int3));
+            Childs.Add(new JMXAttribute("AttachToParent", data.Int3));
             Childs.Add(new JMXAttribute("UnkByte04", data.Byte3));
 
             Childs.Add(new EESourceNodeVM("ViewModeCommand", data.ViewModeCommand.Data));

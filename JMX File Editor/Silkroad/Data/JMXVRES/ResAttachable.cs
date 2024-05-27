@@ -9,7 +9,7 @@ namespace JMXFileEditor.Silkroad.Data.JMXVRES
         #region Public Properties
         public uint UnkUInt01 { get; set; }
         public uint UnkUInt02 { get; set; }
-        public uint AttachMethod { get; set; }
+        public AttachMethodType AttachMethod { get; set; }
         public List<Slot> Slots { get; set; } = new List<Slot>();
         public uint nComboNum { get; set; }
         #endregion
@@ -24,7 +24,7 @@ namespace JMXFileEditor.Silkroad.Data.JMXVRES
             {
                 UnkUInt01 = reader.ReadUInt32();
                 UnkUInt02 = reader.ReadUInt32();
-                AttachMethod = reader.ReadUInt32();
+                AttachMethod = (AttachMethodType)reader.ReadUInt32();
 
                 var count = reader.ReadInt32();
                 for (int i = 0; i < count; i++)
@@ -50,7 +50,7 @@ namespace JMXFileEditor.Silkroad.Data.JMXVRES
             {
                 writer.Write(UnkUInt01);
                 writer.Write(UnkUInt02);
-                writer.Write(AttachMethod);
+                writer.Write((uint)AttachMethod);
                 writer.Write(Slots.Count);
                 for (int i = 0; i < Slots.Count; i++)
                 {
@@ -86,6 +86,12 @@ namespace JMXFileEditor.Silkroad.Data.JMXVRES
             Thigh = 12,
             Calf = 13,
             AttachCape = 14 // Cloack?
+        }
+        public enum AttachMethodType : uint 
+        {
+            BASE = 0,
+            REPLACE,
+            ADD
         }
         #endregion
     }

@@ -104,7 +104,7 @@ namespace JMXFileEditor.ViewModels
             CommandOpenFile = new RelayCommand(() =>
             {
                 // Ask for file path and avoid empty result / canceled operation
-                var path = Window.OpenFileDialog("Open...", "All Files (*.*)|*.*", FilePath);
+                var path = Window.OpenFileDialog("Open...", "All Files (*.*)|*.*", Path.GetDirectoryName(FilePath));
                 if (path == string.Empty)
                     return;
                 TryLoadPath(path, Window);
@@ -121,8 +121,6 @@ namespace JMXFileEditor.ViewModels
                         var jmxFile = LoadJMXFile(FileProperties);
                         // Save it
                         jmxFile.Save(FilePath);
-                        // Update values changed in the process
-                        FileProperties = CreateJMXViewModel(jmxFile);
                     }
                     catch (Exception ex)
                     {
@@ -144,7 +142,7 @@ namespace JMXFileEditor.ViewModels
 
                         // Set temporal filename
                         var filename = GetCopyFileName(Path.GetFileNameWithoutExtension(FilePath),jmxFile.Extension,Path.GetDirectoryName(FilePath));
-                        var folderPath = Window.OpenFolderDialog("Save...", ref filename, FilePath);
+                        var folderPath = Window.OpenFolderDialog("Save...", ref filename, Path.GetDirectoryName(FilePath));
                         // check paths are correct
                         if (folderPath == string.Empty)
                             return;
@@ -153,7 +151,6 @@ namespace JMXFileEditor.ViewModels
                         // Save it
                         jmxFile.Save(filePath);
                         // Update values changed in the process
-                        FileProperties = CreateJMXViewModel(jmxFile);
                         FilePath = filePath;
                     }
                     catch (Exception ex)

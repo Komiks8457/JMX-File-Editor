@@ -14,7 +14,7 @@ namespace JMXFileEditor.ViewModels.Silkroad.JMXVRES
             // create nodes
             Childs.Add(new JMXAttribute("UnkUInt01", Resource.UnkUInt01));
             Childs.Add(new JMXAttribute("UnkUInt02", Resource.UnkUInt02));
-            Childs.Add(new JMXAttribute("AttachMethod", Resource.AttachMethod));
+            Childs.Add(new JMXOption("AttachMethod", Resource.AttachMethod, JMXOption.GetValues<object>(typeof(ResAttachable.AttachMethodType))));
             AddChildArray("Slots", Resource.Slots.ToArray(), true, true);
             Childs.Add(new JMXAttribute("nComboNum", Resource.nComboNum));
         }
@@ -27,7 +27,7 @@ namespace JMXFileEditor.ViewModels.Silkroad.JMXVRES
             {
                 UnkUInt01 = (uint)((JMXAttribute)Structure.Childs[0]).Value,
                 UnkUInt02 = (uint)((JMXAttribute)Structure.Childs[1]).Value,
-                AttachMethod = (uint)((JMXAttribute)Structure.Childs[2]).Value,
+                AttachMethod = (ResAttachable.AttachMethodType)((JMXOption)Structure.Childs[2]).Value,
                 Slots = ((JMXStructure)Structure.Childs[3]).GetChildList<ResAttachable.Slot>(),
                 nComboNum = (uint)((JMXAttribute)Structure.Childs[4]).Value,
             };
