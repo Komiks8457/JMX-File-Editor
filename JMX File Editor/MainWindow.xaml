@@ -39,7 +39,7 @@
                               IsEnabled="{Binding IsFileOpen}"
                               Command="{Binding CommandSaveFile}" />
                     <MenuItem Style="{StaticResource MenuItemLevel2NewStyle}"
-                              Header="Save..."
+                              Header="Save As..."
                               IsEnabled="{Binding IsFileOpen}"
                               Command="{Binding CommandSaveAsFile}" />
                 </MenuItem>

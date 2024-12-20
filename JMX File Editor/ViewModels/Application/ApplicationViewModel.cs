@@ -16,6 +16,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Input;
 using JMXFileEditor.ViewModels.Silkroad.JMXVENVI;
+using Microsoft.Win32;
 
 namespace JMXFileEditor.ViewModels
 {
@@ -140,7 +141,7 @@ namespace JMXFileEditor.ViewModels
                         // Converts to JMX File
                         var jmxFile = LoadJMXFile(FileProperties);
 
-                        // Set temporal filename
+                        /*// Set temporal filename
                         var filename = GetCopyFileName(Path.GetFileNameWithoutExtension(FilePath),jmxFile.Extension,Path.GetDirectoryName(FilePath));
                         var folderPath = Window.OpenFolderDialog("Save...", ref filename, Path.GetDirectoryName(FilePath));
                         // check paths are correct
@@ -151,7 +152,29 @@ namespace JMXFileEditor.ViewModels
                         // Save it
                         jmxFile.Save(filePath);
                         // Update values changed in the process
-                        FilePath = filePath;
+                        FilePath = filePath;*/
+                        
+                        // Initialize SaveFileDialog
+                        var saveFileDialog = new SaveFileDialog
+                        {
+                            Title = "Save As",
+                            Filter = $"{jmxFile.Format}|*.{jmxFile.Extension}",
+                            FileName = $"{Path.GetFileNameWithoutExtension(FilePath)}",
+                            InitialDirectory = Path.GetDirectoryName(FilePath) ?? Directory.GetCurrentDirectory()
+                        };
+
+                        // Show the dialog
+                        var dialogRes = saveFileDialog.ShowDialog();
+
+                        // If use click Save button, otherwise do nothing
+                        if (!dialogRes.HasValue || !dialogRes.Value)
+                            return;
+
+                        // Update values changed in the process
+                        FilePath = Path.Combine(saveFileDialog.InitialDirectory, saveFileDialog.FileName);
+
+                        // Save it
+                        jmxFile.Save(FilePath);
                     }
                     catch (Exception ex)
                     {
